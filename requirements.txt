@@ -1,0 +1,9 @@
+streamlit
+pandas
+openpyxl
+scipy
+statsmodels
+matplotlib
+seaborn
+scikit-posthocs
+python-docx
