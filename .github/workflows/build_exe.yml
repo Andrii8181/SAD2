@@ -1,0 +1,35 @@
+name: Build SAD EXE
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: 🔄 Клонування репозиторію
+      uses: actions/checkout@v3
+
+    - name: 🐍 Встановлення Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: 📦 Встановлення залежностей
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+
+    - name: 🛠️ Створення EXE
+      run: |
+        pyinstaller --onefile sad_app.py
+
+    - name: 📤 Завантаження EXE до релізу
+      uses: softprops/action-gh-release@v1
+      with:
+        files: dist/sad_app.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
