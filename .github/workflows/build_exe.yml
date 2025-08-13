@@ -28,7 +28,7 @@ jobs:
       run: |
         pyinstaller --onefile --icon=sad_icon.ico sad_app.py
 
-    - name: 📤 Завантаження EXE до релізу
+    - name: 📤 Прикріплення EXE до релізу
       if: github.event_name == 'release'
       uses: softprops/action-gh-release@v1
       with:
