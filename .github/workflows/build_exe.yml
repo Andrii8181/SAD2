@@ -1,8 +1,9 @@
 name: Build SAD EXE
 
 on:
+  workflow_dispatch:         # ⬅️ Дозволяє запуск вручну
   release:
-    types: [created]
+    types: [created]         # ⬅️ Запускається при створенні релізу
 
 jobs:
   build:
@@ -23,11 +24,12 @@ jobs:
         pip install -r requirements.txt
         pip install pyinstaller
 
-    - name: 🛠️ Створення EXE
+    - name: 🛠️ Створення EXE з іконкою
       run: |
-        pyinstaller --onefile sad_app.py
+        pyinstaller --onefile --icon=sad_icon.ico sad_app.py
 
     - name: 📤 Завантаження EXE до релізу
+      if: github.event_name == 'release'
       uses: softprops/action-gh-release@v1
       with:
         files: dist/sad_app.exe
